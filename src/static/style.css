@@ -1,0 +1,34 @@
+.not-visible{
+    display: none;
+}
+
+.dz{
+    border-style: dashed;
+    border-radius: 5px;
+    border-color: #ddd;
+    transition:  .5s;
+}
+
+.dz:hover{    
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    
+}
+
+.avatar-sm{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.avatar-big{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.logo-sm{
+    height: 30px;
+    width: auto;
+}
+

@@ -1,0 +1,44 @@
+{% load static %}
+
+{% url 'territorios:home' as path_to_home %}
+{% url 'territorios:from-file' as path_to_upload %}
+{% url 'territorios:charts' as path_to_charts %}
+{% url 'profiles:my-profile' as path_to_my_profile %}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{path_to_home}}"><img src="{% static 'logo.png' %}" class="logo-sm"></a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == path_to_home %}active{% endif %}" href="{{path_to_home}}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == path_to_upload %}active{% endif %}" href="{{path_to_upload}}">Upload File</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == path_to_charts %}active{% endif %}" href="{{path_to_charts}}">Charts</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == path_to_my_profile %}active{% endif %}" href="{{path_to_my_profile}}">Profile</a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </div>
+    {% if request.user.is_authenticated %}
+      <div class="nav-item dropdown">
+        <div class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="{{request.user.profile.foto.url}}" class="avatar-sm">&nbsp;{{request.user}}
+        </div>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item {% if request.path == path_to_my_profile %} active{% endif %}" href="{{path_to_my_profile}}">Profile</a></li>
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+        </ul> 
+      </div>
+    {% endif %}
+  </div>
+</nav>
