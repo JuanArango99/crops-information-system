@@ -4,6 +4,7 @@
 {% url 'territorios:from-file' as path_to_upload %}
 {% url 'territorios:charts' as path_to_charts %}
 {% url 'profiles:my-profile' as path_to_my_profile %}
+{% url 'municipios:home' as path_to_municipios %}
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,6 +26,10 @@
         <li class="nav-item">
           <a class="nav-link {% if request.path == path_to_my_profile %}active{% endif %}" href="{{path_to_my_profile}}">Profile</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == path_to_municipios %}active{% endif %}" href="{{path_to_municipios}}">Profile</a>
+        </li>
+        
         {% endif %}
 
       </ul>

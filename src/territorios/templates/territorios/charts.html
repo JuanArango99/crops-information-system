@@ -49,5 +49,12 @@
 {% endblock scripts %}
 
 {% block content %}
+    {% if qs == '' %}
+    A
+    {% endif %}
+    {% if qs is not None %}
     <canvas id="myChart" width="100" height="100"></canvas>
+    
+    {% endif %}
+    
 {% endblock content %}

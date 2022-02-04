@@ -51,6 +51,7 @@ class ChartView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['qs'] = Dato.objects.filter(territorio=13).order_by('year')
+        
         return context
 
 @login_required
