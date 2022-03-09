@@ -64,7 +64,11 @@ def chartView(request):
 
 def load_territorios(request):
     municipio_id = request.GET.get('municipio')
-    territorios = Territorio.objects.filter(municipio=municipio_id).order_by('name')    
+    if municipio_id != '':        
+        territorios = Territorio.objects.filter(municipio=municipio_id).order_by('name')    
+    else:
+        territorios = Territorio.objects.none()
+        
     return render(request, 'territorios/prueba.html', {'territorios': territorios}) 
 
 @login_required
