@@ -2,6 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+
 {% block title %}Charts{% endblock title %}
 
 {% block scripts %}
@@ -58,8 +59,8 @@
             data: {
                 labels: [{% for item in qs %}'{{item.year}}',{% endfor %}],
                 datasets: [{
-                    label: 'Irradiación',
-                    data: [{% for item in qs %}{{item.temperature}},{% endfor %}],
+                    label: '{{variable}}',
+                    data: {{data}} ,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -99,10 +100,13 @@
     {% csrf_token %}    
     {{territorioForm|crispy}}
     {{datoForm|crispy}}
+    {{form |crispy}}
     <button id="submitButton" type="submit" class="btn btn-primary mt-3">Search</button>
 </form>
+{% if qs %}
+    <canvas id="myChart" width="100" height="100"></canvas>
+{% endif %}
 
-<canvas id="myChart" width="100" height="100"></canvas>
     
     
 {% endblock content %}

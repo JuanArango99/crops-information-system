@@ -3,6 +3,13 @@ from django import forms
 from municipios.models import Municipio
 from territorios.models import Dato, Territorio
 
+VARIABLES = (
+    ('irradiance', ("irradiance")),
+    ('temperature', ("temperature")),
+    ('relative_humidity', ("relative_humidity")),
+    ('precipitation', ("precipitation"))    
+)
+
 class TerritoriesSearchForm(forms.Form):
     date_from = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     date_to = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))    
@@ -14,8 +21,7 @@ class MunicipiosSearchForm(forms.Form):
 class ChartForm(forms.Form):
     date_from = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     date_to = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))    
-    municipio = forms.ModelChoiceField(queryset=Municipio.objects.all())
-    territorio = forms.ModelChoiceField(queryset=Territorio.objects.all())
+    variable = forms.ChoiceField(widget=forms.Select(), required=True, choices=VARIABLES)
     
 class TerritorioForm(forms.ModelForm):
     class Meta:
@@ -31,7 +37,7 @@ class DatoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['territorio'].queryset = Territorio.objects.none()
 
-
+ 
        
             
 

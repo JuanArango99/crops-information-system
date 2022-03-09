@@ -1,4 +1,5 @@
 from urllib import request
+from django import template
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from .forms import ChartForm, DatoForm, MunicipiosSearchForm, TerritoriesSearchForm, TerritorioForm
@@ -44,20 +45,34 @@ def home_view(request):
 
     return render(request,'territorios/home.html', context)
 
+register = template.Library()
+
+@register.filter
+def get_attr(object, name):
+    return getattr(object, name, '')
+
 def chartView(request):
-    #form = ChartForm(request.POST or None)
     territorioForm = TerritorioForm()
     datoForm = DatoForm()
+    form = ChartForm()
     qs =  None
+    variable = None    
+    data = []
     if request.method == 'POST':
-        municipio = request.POST.get('municipio')
         territorio = request.POST.get('territorio')
-
+        variable = str(request.POST.get('variable'))
         qs = Dato.objects.filter(territorio = territorio)
+        for item in qs:
+            data.append(getattr(item, variable))
+        
     context = {
         'qs': qs,
         'territorioForm':territorioForm,
         'datoForm':datoForm,
+        'form':form,
+        'variable':variable,
+        'data':data,
+
     }
 
     return render(request, 'territorios/charts.html', context)
