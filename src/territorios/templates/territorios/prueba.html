@@ -1,0 +1,5 @@
+
+<option value="">---------</option>
+{% for territorio in territorios %}
+    <option value="{{ territorio.pk }}">{{ territorio.name }}</option>
+{% endfor %}

@@ -1,7 +1,7 @@
 from urllib import request
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from .forms import MunicipiosSearchForm, TerritoriesSearchForm
+from .forms import ChartForm, DatoForm, MunicipiosSearchForm, TerritoriesSearchForm, TerritorioForm
 from .models import Dato, CSV
 from territorios.models import Territorio
 from municipios.models import Municipio
@@ -23,8 +23,7 @@ def home_view(request):
     obj = None
     if request.method == 'POST':
         date_from = request.POST.get('date_from')
-        date_to = request.POST.get('date_to')
-        chart_type = request.POST.get("chart_type")
+        date_to = request.POST.get('date_to')        
         id_territorio = request.POST.get('territorio')
         territorio = Territorio.objects.get(id=id_territorio)    
                 
@@ -45,14 +44,28 @@ def home_view(request):
 
     return render(request,'territorios/home.html', context)
 
-class ChartView(TemplateView):
-    template_name = 'territorios/charts.html'
+def chartView(request):
+    #form = ChartForm(request.POST or None)
+    territorioForm = TerritorioForm()
+    datoForm = DatoForm()
+    qs =  None
+    if request.method == 'POST':
+        municipio = request.POST.get('municipio')
+        territorio = request.POST.get('territorio')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['qs'] = Dato.objects.filter(territorio=13).order_by('year')
-        
-        return context
+        qs = Dato.objects.filter(territorio = territorio)
+    context = {
+        'qs': qs,
+        'territorioForm':territorioForm,
+        'datoForm':datoForm,
+    }
+
+    return render(request, 'territorios/charts.html', context)
+
+def load_territorios(request):
+    municipio_id = request.GET.get('municipio')
+    territorios = Territorio.objects.filter(municipio=municipio_id).order_by('name')    
+    return render(request, 'territorios/prueba.html', {'territorios': territorios}) 
 
 @login_required
 def uploadTemplateView(request):
