@@ -17,9 +17,8 @@ def create_municipio_view(request):
             message = 'El municipio '+name+' fue creado satisfactoriamente'
         else:
             was_created = False
-            alert_type = 'warning'
-            message = '¡Ooopss..! ya existe un municipio con el nombre de '+name
-
+            alert_type = 'danger'
+            message = '¡Ooopss..! Ya existe un municipio con el nombre de '+name
 
     context = {
         'form': form,
@@ -27,7 +26,6 @@ def create_municipio_view(request):
         'alert_type': alert_type,
         'message': message,
         'name': name,
-
     }
     
     return render(request,'municipios/home.html', context)

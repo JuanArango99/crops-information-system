@@ -3,6 +3,7 @@
 {% url 'territorios:home' as path_to_home %}
 {% url 'territorios:from-file' as path_to_upload %}
 {% url 'territorios:charts' as path_to_charts %}
+{% url 'territorios:map' as path_to_map %}
 {% url 'profiles:my-profile' as path_to_my_profile %}
 {% url 'municipios:home' as path_to_municipios %}
 
@@ -27,7 +28,10 @@
           <a class="nav-link {% if request.path == path_to_my_profile %}active{% endif %}" href="{{path_to_my_profile}}">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if request.path == path_to_municipios %}active{% endif %}" href="{{path_to_municipios}}">Profile</a>
+          <a class="nav-link {% if request.path == path_to_municipios %}active{% endif %}" href="{{path_to_municipios}}">Municipios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == path_to_map %}active{% endif %}" href="{{path_to_map}}">Mapa</a>
         </li>
         
         {% endif %}

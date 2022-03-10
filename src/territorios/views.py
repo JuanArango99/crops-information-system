@@ -1,4 +1,5 @@
 from urllib import request
+from attr import attr
 from django import template
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
@@ -17,6 +18,12 @@ import csv
 import pandas as pd
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+import folium
+
+register = template.Library()
+@register.filter
+def get_attr(object, name):
+    return getattr(object, name, '')
 
 def home_view(request):
     form = TerritoriesSearchForm(request.POST or None)
@@ -45,11 +52,34 @@ def home_view(request):
 
     return render(request,'territorios/home.html', context)
 
-register = template.Library()
+def mapView(request):
+    lon = 9.129754392830863
+    lat = -73.53600433475354
+    territorios = Territorio.objects.all()   
+    
+    m = folium.Map(
+        location=[lon,lat],
+        # tiles="OpenStreetMap",
+        # tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        # attr= 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',        
+        tiles='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
+        attr='&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	    
+        width="%100",
+        height="%100",
+        zoom_start=8)
+    for item in territorios:
+        folium.CircleMarker(location=(item.longitud,item.latitud),radius=15, fill_color='blue').add_to(m)
+        folium.Marker(location=(item.longitud,item.latitud),popup=item.name).add_to(m)
+        folium.map.Layer()
 
-@register.filter
-def get_attr(object, name):
-    return getattr(object, name, '')
+    
+    m = m._repr_html_()
+    context={
+        'map':m,
+
+    }
+    return render(request,'territorios/mapa.html',context)
 
 def chartView(request):
     territorioForm = TerritorioForm()
