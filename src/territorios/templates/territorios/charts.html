@@ -36,8 +36,7 @@
                     }
                 });
             });
-            $("#id_territorio").change(function () {
-                console.log($(this).val())
+            $("#id_territorio").change(function () {                
                 if ($(this).val() != '') {
                     $("#submitButton").prop("disabled",false);
                 }else{
@@ -68,7 +67,9 @@
                         'rgba(0, 154, 64, 0.2)'
                     ],
                     borderColor: 'rgba(100, 99, 132, 1)',
-                    borderWidth: 1
+                    borderWidth: 1,
+                    radius:0.2,
+                    
                 }]
             },
             options: {
@@ -122,7 +123,7 @@
 
 {% block content %}
 
-<form method="POST" id="dataForm" data-cities-url="{% url 'territorios:ajax_load_cities' %}" novalidate>
+<form method="POST" id="dataForm" data-cities-url="{% url 'territorios:ajax_load_cities' %}" >
     {% csrf_token %}    
     {{territorioForm|crispy}}
     {{datoForm|crispy}}
@@ -137,6 +138,11 @@
   <div class="box"><canvas id="myChart2"></canvas> </div>
 </div> 
 <canvas id="myChart"></canvas>
+
+{% else %}
+<div class="alert alert-info mt-3" role="alert">
+    No hay datos para mostrar. Seleccione un rango de tiempo adecuado.
+   </div>
 {% endif %}
 
     

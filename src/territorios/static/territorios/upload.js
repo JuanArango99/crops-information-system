@@ -41,8 +41,7 @@ const myDropzone = new Dropzone('#my-dropzone',{
                 });
             });            
           });
-        this.on('sending', function(file, xhr, formData){
-            console.log('sending');
+        this.on('sending', function(file, xhr, formData){            
             formData.append('csrfmiddlewaretoken', csrf);        
             formData.append('municipio', municipio.value);        
         });

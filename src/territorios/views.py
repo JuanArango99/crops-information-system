@@ -2,7 +2,7 @@ from django import template
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 import numpy as np
-from .forms import ChartForm, DatoForm, MunicipiosSearchForm, TerritoriesSearchForm, TerritorioForm
+from .forms import ChartForm, DatoForm, MunicipiosSearchForm, TerritoriesSearchForm, TerritorioForm, StatisticForm
 from .models import Dato, CSV
 from territorios.models import Territorio
 from municipios.models import Municipio
@@ -48,7 +48,7 @@ def home_view(request):
 
 def mapView(request):
     #Son 19 colores disponibles por folium para el color de icono.
-    colors = ['red', 'orange', 'green', 'darkblue', 'darkgreen', 'darkpurple', 'pink', 'cadetblue', 'purple', 'lightblue', 'darkred', 'beige', 'gray', 'lightgray', 'blue', 'black', 'lightred', 'lightgreen', 'white']
+    colors = ['red', 'orange', 'green', 'darkblue', 'darkgreen', 'darkpurple', 'darkred', 'cadetblue', 'purple', 'lightblue', 'pink', 'beige', 'gray', 'lightgray', 'blue', 'black', 'lightred', 'lightgreen', 'white']
     #Coordenadas para centrar el mapa en cesar
     lon = 9.129754392830863
     lat = -73.53600433475354
@@ -88,17 +88,66 @@ def mapView(request):
     }
     return render(request,'territorios/mapa.html',context)
 
+def statisticView(request):
+    form = StatisticForm()
+    territorioForm = TerritorioForm()
+    datoForm = DatoForm()
+    date_from = request.POST.get('date_from')
+    date_to = request.POST.get('date_to')  
+    variableX = None
+    variableY = None
+    dataX = []
+    dataY = []
+    qs=None
+    data=None
+
+    if request.method == 'POST':
+        variableX=request.POST.get('variableX')
+        variableY=request.POST.get('variableY')
+        territorio = request.POST.get('territorio')
+
+        qs = Dato.objects.filter(
+            territorio = territorio,
+            year__lte=date_to,
+            year__gte = date_from  
+        )
+        for item in qs:
+            dataX.append(getattr(item, variableX))
+            dataY.append(getattr(item, variableY))
+
+        
+
+
+    context = {
+        'qs': qs,
+        'territorioForm':territorioForm,
+        'datoForm':datoForm,
+        'form':form,
+        'variableX':variableX,
+        'variableY':variableY,
+        'data':data,    
+        'dataX': dataX,    
+        'dataY': dataY,    
+    }
+    return render(request, 'territorios/statistics.html', context)
+
 def chartView(request):
     territorioForm = TerritorioForm()
     datoForm = DatoForm()
     form = ChartForm()
+    date_from = request.POST.get('date_from')
+    date_to = request.POST.get('date_to')   
     qs =  None
     variable = None    
     data = []
     if request.method == 'POST':
         territorio = request.POST.get('territorio')
         variable = str(request.POST.get('variable'))
-        qs = Dato.objects.filter(territorio = territorio)
+        qs = Dato.objects.filter(
+            territorio = territorio,
+            year__lte=date_to,
+            year__gte = date_from  
+        )
         for item in qs:
             data.append(getattr(item, variable))
         

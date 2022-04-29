@@ -3,6 +3,7 @@
 {% url 'territorios:home' as path_to_home %}
 {% url 'territorios:from-file' as path_to_upload %}
 {% url 'territorios:charts' as path_to_charts %}
+{% url 'territorios:statistics' as path_to_statistics %}
 {% url 'territorios:map' as path_to_map %}
 {% url 'profiles:my-profile' as path_to_my_profile %}
 {% url 'municipios:home' as path_to_municipios %}
@@ -22,6 +23,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link {% if request.path == path_to_charts %}active{% endif %}" href="{{path_to_charts}}">Gráficos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == path_to_statistics %}active{% endif %}" href="{{path_to_statistics}}">Estadísticas</a>
         </li>
         <li class="nav-item">
           <a class="nav-link {% if request.path == path_to_upload %}active{% endif %}" href="{{path_to_upload}}">Cargar Archivo</a>

@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     home_view, 
     chartView,
+    statisticView,
     csv_upload_view,
     mapView,
     uploadTemplateView,
@@ -14,6 +15,7 @@ app_name = 'territorios'
 urlpatterns = [
     path('', home_view, name='home'),
     path('charts/', chartView, name='charts'),
+    path('statistics/', statisticView, name='statistics'),
     path('from_file/', uploadTemplateView, name='from-file'),
     path('upload/', csv_upload_view, name='upload'),
     path('map/', mapView, name='map'),
