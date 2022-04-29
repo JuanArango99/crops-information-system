@@ -9,7 +9,7 @@ def create_municipio_view(request):
     message = None
     name = None
     if request.method == 'POST':
-        name = request.POST.get('name').capitalize()        
+        name = request.POST.get('name').title()        
         municipio_obj, created = Municipio.objects.get_or_create(name = name)
         if created:
             was_created = True

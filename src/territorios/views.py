@@ -1,6 +1,7 @@
 from django import template
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+import numpy as np
 from .forms import ChartForm, DatoForm, MunicipiosSearchForm, TerritoriesSearchForm, TerritorioForm
 from .models import Dato, CSV
 from territorios.models import Territorio
@@ -66,10 +67,10 @@ def mapView(request):
     m = folium.Map(
         location=[lon,lat],
         # tiles="OpenStreetMap",
-        # tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        # attr= 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',        
-        tiles='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
-        attr='&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attr= 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',        
+        #tiles='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
+        #attr='&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         width="100%",
         height="80",
         zoom_start=8)
@@ -146,8 +147,9 @@ def csv_upload_view(request):
             obj.csv_file = csv_file
             obj.save() 
             #Leer dataset
-            # - - - - - - - REMOVER NROWS DE DATAFRAME 'DATA' - - - - - - - 
-            data = pd.read_csv(obj.csv_file.path,skiprows=12, nrows=2,dtype={'DOY': object,'YEAR': object})
+            data = pd.read_csv(obj.csv_file.path,skiprows=12, dtype={'DOY': object,'YEAR': object})
+            data = data.replace(-999.0, np.NaN)
+            data = data.fillna(method='bfill')
             data['DATE'] = pd.to_datetime(data['YEAR']+"-"+data['DOY'], format='%Y-%j').dt.strftime('%d-%m-%Y')
             data['DATE'] = pd.to_datetime(data['DATE'],format='%d-%m-%Y')
             #Obtener Longitud y Latitud apartir del csv

@@ -20,8 +20,8 @@ const myDropzone = new Dropzone('#my-dropzone',{
     url: '/upload/',
     autoProcessQueue: false,
     init: function(){
-        submitButton.addEventListener("click", function(){
-            myDropzone.processQueue();
+        submitButton.addEventListener("click", function(){            
+            myDropzone.processQueue();            
         });
         this.on("addedfile", file => {
             if (municipio.value == "") {

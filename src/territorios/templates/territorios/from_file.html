@@ -24,13 +24,18 @@ upload files
 </form>
 <br>
 <div id="alert-box"></div>
-    <form id="my-dropzone" class="dropzone dz">
-        {% csrf_token %}
-        <div class="fallback">
-            <input name="file" type="file" /> 
-        </div>
-    </form>
-<button id="upload-btn" type="submit" class="btn btn-primary mt-3">Guardar</button>
+<form id="my-dropzone" class="dropzone dz">
+    {% csrf_token %}
+    <div class="fallback">
+        <input name="file" type="file" /> 
+    </div>
+</form>
+
+
+<button id="upload-btn" type="submit" class="btn btn-success mt-3">Guardar</button>
+<button onClick="window.location.reload();" type="button" class="btn btn-outline-primary mt-3">Cargar Otro</button>
+
+
 
 {% endblock content %}
 
