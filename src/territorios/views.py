@@ -19,7 +19,7 @@ register = template.Library()
 def get_attr(object, name):
     return getattr(object, name, '')
 
-def home_view(request):
+def reports_view(request):
     form = TerritoriesSearchForm(request.POST or None)
     no_data = None
     obj = None
@@ -44,7 +44,7 @@ def home_view(request):
 
     }
 
-    return render(request,'territorios/home.html', context)
+    return render(request,'territorios/reports.html', context)
 
 def mapView(request):
     #Son 19 colores disponibles por folium para el color de icono.

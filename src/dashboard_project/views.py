@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
+def home_view(request):
+
+    return render(request,'home.html')
+
 def logout_view(request):
     logout(request)
     return redirect('login')
@@ -20,7 +24,7 @@ def login_view(request):
                 if request.GET.get('next'):
                     return redirect(request.GET.get('next'))
                 else: #Return to home
-                    return redirect('territorios:home')
+                    return redirect('home')
         else:
             error_message = 'Lo sentimos.. Algo ocurrió mal'
     

@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    home_view, 
+    reports_view, 
     chartView,
     statisticView,
     csv_upload_view,
@@ -13,7 +13,7 @@ from .views import (
 app_name = 'territorios'
 
 urlpatterns = [
-    path('', home_view, name='home'),
+    path('reports/', reports_view, name='reports'),
     path('charts/', chartView, name='charts'),
     path('statistics/', statisticView, name='statistics'),
     path('from_file/', uploadTemplateView, name='from-file'),
