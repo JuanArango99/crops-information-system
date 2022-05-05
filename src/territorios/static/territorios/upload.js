@@ -17,7 +17,7 @@ const handleAlerts = (type, msg) =>{
 
 Dropzone.autoDiscover = false
 const myDropzone = new Dropzone('#my-dropzone',{
-    url: '/upload/',
+    url: '/territorios/upload/',
     autoProcessQueue: false,
     init: function(){
         submitButton.addEventListener("click", function(){            

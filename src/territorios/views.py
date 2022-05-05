@@ -74,6 +74,8 @@ def mapView(request):
         width="100%",
         height="80",
         zoom_start=8)
+    folium.LatLngPopup().add_to(m)
+
     for item in territorios:
         folium.CircleMarker(location=(item.longitud,item.latitud),radius=10, fill_color='green').add_to(m)
         folium.Marker(
