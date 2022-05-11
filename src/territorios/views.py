@@ -13,6 +13,7 @@ from xhtml2pdf import pisa
 import pandas as pd
 from django.contrib.auth.decorators import login_required
 import folium
+from branca.element import Figure
 
 register = template.Library()
 @register.filter
@@ -48,32 +49,46 @@ def reports_view(request):
 
 def mapView(request):
     #Son 19 colores disponibles por folium para el color de icono.
-    colors = ['red', 'orange', 'green', 'darkblue', 'darkgreen', 'darkpurple', 'darkred', 'cadetblue', 'purple', 'lightblue', 'pink', 'beige', 'gray', 'lightgray', 'blue', 'black', 'lightred', 'lightgreen', 'white']
+    colors = ['red', 'orange', 'green', 'darkblue', 'darkgreen', 'black', 'darkred', 'cadetblue', 'pink', 'lightblue', 'purple', 'beige', 'gray', 'lightgray', 'blue', 'darkpurple', 'lightred', 'lightgreen', 'white']
     #Coordenadas para centrar el mapa en cesar
     lon = 9.129754392830863
     lat = -73.53600433475354
     territorios = Territorio.objects.all()   
     municipios = Municipio.objects.all()
     municipiosPk = [] # Lista de las PK de los municipios
+    municipiosName= [] # Lista de los nombres de los municipios
     for municipio in municipios:
         municipiosPk.append(municipio.pk)
-
+        municipiosName.append(municipio.name)
+    
     municipiosColor = {} # Diccionario con los colores de cada municipio. 
                         #La PK del Municipio es la key y el value es un color de la lista de colores 'colors'
+    municipiosColorName = {}
     for i in range(len(municipiosPk)):
+        municipiosColorName[municipiosName[i]] = colors[i]
         municipiosColor[municipiosPk[i]] = colors[i]   # Ej: diccionario<key=municipioPk, value=color
                                                       #  {'1':'red; '2':orange'  ....}
 
+        
+    
+    fig = Figure(width="100%", height="550px")
     m = folium.Map(
         location=[lon,lat],
-        # tiles="OpenStreetMap",
-        tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        attr= 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',        
-        #tiles='https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png',
-        #attr='&copy; OpenStreetMap France | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        width="100%",
-        height="80",
-        zoom_start=8)
+        tiles="OpenStreetMap",        
+        width="100",
+        height="100",
+        zoom_start=8)    
+    
+    folium.TileLayer(name="Relieve",
+    tiles='https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', 
+    attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)').add_to(m)    
+    
+    folium.TileLayer(name="Satelital",
+    tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', 
+    attr='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community').add_to(m)
+    
+    folium.LayerControl().add_to(m)
+    fig.add_child(m)
     folium.LatLngPopup().add_to(m)
 
     for item in territorios:
@@ -86,6 +101,7 @@ def mapView(request):
     m = m._repr_html_()
     context={
         'map':m,
+        'municipios': municipiosColorName,       
 
     }
     return render(request,'territorios/mapa.html',context)

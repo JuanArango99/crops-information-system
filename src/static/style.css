@@ -53,6 +53,22 @@
 
 }
 
+.map{
+    position: relative;
+    width: 100%;
+    display: flex;
+    grid-template-columns: 2fr 1fr;
+    
+}
+
+.mapitem{
+    position: relative;    
+    padding: 7px;
+    box-shadow: #222;
+    border-radius: 20px;
+
+}
+
 #home{
     background: url('crops.jpeg') no-repeat center center fixed;
     height: 100%;
@@ -143,5 +159,24 @@ footer .row{
 }
 
 .navbar-nav li{
-    font-size: 17px;
+    font-size: 15px;
+}
+
+.labels{
+    background-color: #dbdbdb4f;
+    text-align: left;
+    padding: 10px;
+    font-weight: bold;
+    border: 1px solid #aed790;
+    border-radius: 2%;    
+}
+
+.labels p{
+    font-size: 15px;        
+}
+
+.labels i{
+    font-size: 15px;
+    padding: 7px 12px 7px 7px;
+    
 }
