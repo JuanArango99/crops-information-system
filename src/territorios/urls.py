@@ -7,7 +7,8 @@ from .views import (
     mapView,
     uploadTemplateView,
     load_territorios,
-
+    render_pdf_view,
+    export
     )
 
 app_name = 'territorios'
@@ -19,6 +20,8 @@ urlpatterns = [
     path('from_file/', uploadTemplateView, name='from-file'),
     path('upload/', csv_upload_view, name='upload'),
     path('map/', mapView, name='map'),
+    path('pdf/', render_pdf_view, name='pdf'),    
+    path('export/', export, name='export'),
     path('ajax/load-cities/', load_territorios, name='ajax_load_cities'),  # <-- this one here
    
 ]
