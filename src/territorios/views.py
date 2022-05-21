@@ -1,4 +1,5 @@
 
+from calendar import month
 from tkinter.messagebox import NO
 from urllib import response
 from django import template
@@ -20,6 +21,8 @@ from branca.element import Figure
 from django.core.paginator import Paginator
 from datetime import datetime
 import csv
+from django.db.models.functions import TruncMonth, TruncYear
+from django.db.models import Count
 
 register = template.Library()
 @register.filter
@@ -34,18 +37,20 @@ def reports_view(request):
     territorio=None
     date_from=None
     date_to=None
+    objs = []
                 
     if request.method == 'POST':
         if form.is_valid():
             date_from = request.POST.get('date_from')
             date_to = request.POST.get('date_to')        
             id_territorio = request.POST.get('territorio')
-            territorio = Territorio.objects.get(id=id_territorio)                    
-            obj = Dato.objects.filter(
+            territorio = Territorio.objects.get(id=id_territorio)                 
+            objs = Dato.objects.filter(
                     territorio=territorio,
                     year__lte=date_to,
                     year__gte = date_from                
-                    )[:10]
+                    )
+            obj = objs[:10]                
             request.session['territorio'] = id_territorio
             request.session['date_to'] = date_to
             request.session['date_from'] = date_from
@@ -59,6 +64,7 @@ def reports_view(request):
     context = {
         'form': form,
         'obj': obj,  
+        'cantidad':len(objs),
         'date_from':date_from,
         'date_to':date_to,
         'territorio':territorio, 
@@ -188,6 +194,13 @@ def chartView(request):
     qs =  None
     variable = None    
     data = []
+    territorio = None
+    territorioObj = None
+    df=None
+    dati=None
+    datis=None
+    fechas=None
+    fechas=[]
     if request.method == 'POST':
         territorio = request.POST.get('territorio')
         variable = str(request.POST.get('variable'))
@@ -196,16 +209,25 @@ def chartView(request):
             year__lte=date_to,
             year__gte = date_from  
         )
+        df = pd.DataFrame(list(qs.values('year', variable)))
+        dati=df.groupby(pd.PeriodIndex(df['year'], freq="M"))[variable].mean().reset_index()
+        datis = [i for i in dati[variable].values]
+        fechas = dati['year']    
         for item in qs:
             data.append(getattr(item, variable))
         
     context = {
         'qs': qs,
+        'territorioObj': territorioObj,
         'territorioForm':territorioForm,
         'datoForm':datoForm,
         'form':form,
         'variable':variable,
         'data':data,
+        'df':dati,
+        'fechas':fechas,
+        'datis':datis
+
     }
     return render(request, 'territorios/charts.html', context)
 

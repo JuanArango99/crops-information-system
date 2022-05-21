@@ -39,16 +39,17 @@
     width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 2fr;
+    min-height: 200px;
     grid-gap: 30px
 }
 
-.box{
+.graphBox .box{
     position: relative;
     background-color: rgb(255, 255, 255);
     padding: 20px;
     width: 100%;
-    box-shadow: #222;
+    box-shadow: 0 7px 25px rgb(41, 22, 22);
     border-radius: 20px;
 
 }
@@ -178,5 +179,18 @@ footer .row{
 .labels i{
     font-size: 15px;
     padding: 7px 12px 7px 7px;
+    
+}
+
+#cargarArchivo{
+    font-size: 50px;
+    font-weight: 600;
+    background-image: linear-gradient(to left, #56dd74, #1a5028);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+#cargarArchivo2{
+    font-family: "Trebuchet MS", sans-serif;        
     
 }

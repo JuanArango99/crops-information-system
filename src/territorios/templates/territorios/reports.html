@@ -7,6 +7,9 @@
 {% block title %}Reportes{% endblock title %}
 
 {% block content %}
+<h1>Reportes</h1>
+<hr/>
+<br/>
     <form action="" method="POST">
         {% csrf_token %}
         {{form|crispy}}
@@ -14,7 +17,7 @@
     </form>
     <br>        
     {% if obj %}
-        <h3>Boletín informativo de la localidad {{territorio.name}} del municipio 
+        <h3 style="color: rgba(6, 43, 17, 0.9);">Boletín informativo de la localidad {{territorio.name}} del municipio 
             {{territorio.municipio.name}}  </h3>
             <h4>Datos históricos entre {{date_from}} y {{date_to}}</h4>
         <hr/>
@@ -45,7 +48,7 @@
                     {% endfor %}            
                 </tbody>
             </table>
-            <p>10 primeros resultados</p>
+            <p>10 primeros resultados de {{cantidad}}</p>
             <br/>
             <hr/>
     {% endif %}        
