@@ -6,7 +6,6 @@
 
 {% block scripts %}
 <script>
-
     $(document).ready(function(){
                 
         if ($("#id_territorio").val() != '') {
@@ -86,6 +85,9 @@
 {% endblock scripts %}
 
 {% block content %}
+<h1 class="headers">Estadísticas</h1>
+<hr/>
+<br/>
 <form method="POST" id="dataForm" data-cities-url="{% url 'territorios:ajax_load_cities' %}" >
     {% csrf_token %}    
     {{territorioForm|crispy}}

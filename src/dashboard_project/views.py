@@ -6,6 +6,9 @@ def home_view(request):
 
     return render(request,'home.html')
 
+def news_view(request):
+    return render(request,'news.html')
+
 def logout_view(request):
     logout(request)
     return redirect('login')

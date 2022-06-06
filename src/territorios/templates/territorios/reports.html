@@ -7,7 +7,7 @@
 {% block title %}Reportes{% endblock title %}
 
 {% block content %}
-<h1>Reportes</h1>
+<h1 class="headers">Reportes</h1>
 <hr/>
 <br/>
     <form action="" method="POST">
@@ -17,9 +17,9 @@
     </form>
     <br>        
     {% if obj %}
-        <h3 style="color: rgba(6, 43, 17, 0.9);">Boletín informativo de la localidad {{territorio.name}} del municipio 
+        <h3 class="headers">Boletín informativo de la localidad {{territorio.name}} del municipio 
             {{territorio.municipio.name}}  </h3>
-            <h4>Datos históricos entre {{date_from}} y {{date_to}}</h4>
+            <h4 class="headers">Datos históricos entre {{date_from}} y {{date_to}}</h4>
         <hr/>
             <a href={% url 'territorios:export' %} class="btn btn-success mt-3 mb-3">Exportar como CSV</a>            
             <table class="text-center table table-hover table-striped table-bordered mt-3">

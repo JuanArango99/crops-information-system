@@ -45,11 +45,12 @@
 }
 
 .graphBox .box{
+    align-self: center;
     position: relative;
     background-color: rgb(255, 255, 255);
     padding: 20px;
     width: 100%;
-    box-shadow: 0 7px 25px rgb(41, 22, 22);
+    /* box-shadow: 0 7px 25px rgb(41, 22, 22); */
     border-radius: 20px;
 
 }
@@ -95,16 +96,16 @@
 
 }
 
-.landing-text h1{
+.landing-text > h1{
     font-size: 500%;
 }
 
-.landing-text h3{
+.landing-text > h3{
     font-size: 200%;
 
 }
 
-.landing-text h1, h3{
+.landing-text > h1, h3{
     font-weight: 700;
     color: #aed790;
 
@@ -182,15 +183,11 @@ footer .row{
     
 }
 
-#cargarArchivo{
-    font-size: 50px;
+.headers{    
     font-weight: 600;
+    font-family: "Trebuchet MS", sans-serif;        
     background-image: linear-gradient(to left, #56dd74, #1a5028);
     color: transparent;
-    background-clip: text;
+    background-clip: text;    
     -webkit-background-clip: text;
-}
-#cargarArchivo2{
-    font-family: "Trebuchet MS", sans-serif;        
-    
 }

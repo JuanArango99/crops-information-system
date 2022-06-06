@@ -6,12 +6,14 @@
 
 
 {% block content %}
+<h1 class="headers">Creación de Municipios</h1>
+<hr><br>
+
 {% if created is not none %}
     <div class="alert alert-{{alert_type}}" role="alert">
         {{message}}
     </div>
 {% endif %}
-
 
 <form action="" method="POST">
     {% csrf_token %}

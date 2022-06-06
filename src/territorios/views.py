@@ -187,8 +187,8 @@ def statisticView(request):
 
 def chartView(request):
     territorioForm = TerritorioForm()
-    datoForm = DatoForm()
-    form = ChartForm()
+    datoForm = DatoForm(request.POST or None)
+    form = ChartForm(request.POST or None)
     date_from = request.POST.get('date_from')
     date_to = request.POST.get('date_to')   
     qs =  None
@@ -202,19 +202,21 @@ def chartView(request):
     fechas=None
     fechas=[]
     if request.method == 'POST':
-        territorio = request.POST.get('territorio')
-        variable = str(request.POST.get('variable'))
-        qs = Dato.objects.filter(
-            territorio = territorio,
-            year__lte=date_to,
-            year__gte = date_from  
-        )
-        df = pd.DataFrame(list(qs.values('year', variable)))
-        dati=df.groupby(pd.PeriodIndex(df['year'], freq="M"))[variable].mean().reset_index()
-        datis = [i for i in dati[variable].values]
-        fechas = dati['year']    
-        for item in qs:
-            data.append(getattr(item, variable))
+        if form.is_valid():
+            territorio = request.POST.get('territorio')
+            variable = str(request.POST.get('variable'))
+            territorioObj = Territorio.objects.get(id=territorio)                 
+            qs = Dato.objects.filter(
+                territorio = territorio,
+                year__lte=date_to,
+                year__gte = date_from  
+            )
+            df = pd.DataFrame(list(qs.values('year', variable)))
+            dati=df.groupby(pd.PeriodIndex(df['year'], freq="M"))[variable].mean().reset_index()
+            datis = [i for i in dati[variable].values]
+            fechas = dati['year']    
+            for item in qs:
+                data.append(getattr(item, variable))
         
     context = {
         'qs': qs,

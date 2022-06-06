@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import home_view, login_view, logout_view
+from .views import home_view,news_view, login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +25,7 @@ urlpatterns = [
     path('municipios/', include('municipios.urls', namespace='municipios')),
     path('profiles/', include('profiles.urls', namespace='profiles')),
     path('', home_view, name='home'),
+    path('noticias/', news_view, name='news'),    
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),        
 

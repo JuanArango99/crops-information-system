@@ -11,15 +11,20 @@ Cargar Territorio
 {% endblock title %}
 
 {% block content %}
-<h1 id="cargarArchivo">Carga de Archivos</h1>
-<h2 id="cargarArchivo2">Este módulo se encarga de cargar los datos correspondientes de
-    los territorios según el municipio al que pertenecen.</h2>
-<h5 style="color:#ad28af">El nombre debe ser el del territorio
-    y en caso de tener espacios deben estar separados por guión bajo. Ej: El_totumal</h5>
-<h5 style="color:#ad28af"> Cargar un sólo archivo.  </h5>
-<h5 style="color:#ad28af">Sólo se admiten archivos en formato .csv </h5>
-<hr>
-<br>
+<h1 class="headers">Carga de Archivos</h1>
+<h4>Este módulo se encarga de cargar los datos correspondientes de
+    los territorios según el municipio al que pertenecen.</h4>
+<br/>
+<div class="alert alert-warning" role="alert">
+    <h4 class="alert-heading">Al momento de cargar un archivo tener en cuenta:</h4>
+    <hr>
+    <p>Cargar un único archivo a la vez.</p>          
+    <p>Sólo se admiten archivos en formato .csv.</p>
+    <p>Seleccionar el municipio al que pertenece su jurisdicción.</p>
+    <p>El nombre del archivo debe ser el del territorio,
+        y en caso de tener espacios deben estar separados por guión bajo. Ej: El_Totumal</p>    
+</div>
+<br/>
 <form action="" method="POST" id="my-form">
     {% csrf_token %}
     {{form|crispy}}    
@@ -34,10 +39,10 @@ Cargar Territorio
 </form>
 
 
-<button id="upload-btn" type="submit" class="btn btn-success mt-3">Guardar</button>
-<button onClick="window.location.reload();" type="button" class="btn btn-outline-primary mt-3">Cargar Otro</button>
+<button id="upload-btn" type="submit" class="btn btn-success m-3">Guardar</button>
+<button onClick="window.location.reload();" type="button" class="btn btn-outline-primary mt-3 mb-3">Cargar Otro</button>
 
-
+<br/>
 
 {% endblock content %}
 
