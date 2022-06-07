@@ -81,7 +81,18 @@
     align-items: center;
     justify-content: center;
     background-size: cover;
-    
+}
+
+#homeNews{
+    background: url('crops3.jpg') no-repeat center center fixed;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover; 
 }
 
 .landing-text {
@@ -190,4 +201,8 @@ footer .row{
     color: transparent;
     background-clip: text;    
     -webkit-background-clip: text;
+}
+
+.carousel-caption{
+    bottom: 8.25rem !important;
 }
