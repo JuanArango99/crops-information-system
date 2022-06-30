@@ -198,13 +198,19 @@ def chartView(request):
     territorioObj = None
     df=None
     dati=None
-    datis=None
+    datos=None
     fechas=None
     fechas=[]
+    promedio = None
+    minimo = None
+    maximo = None
+    variableName=None
     if request.method == 'POST':
         if form.is_valid():
             territorio = request.POST.get('territorio')
             variable = str(request.POST.get('variable'))
+            variableName = form.cleaned_data['variable']
+            variableName = dict(form.fields['variable'].choices)[variableName]            
             territorioObj = Territorio.objects.get(id=territorio)                 
             qs = Dato.objects.filter(
                 territorio = territorio,
@@ -213,7 +219,10 @@ def chartView(request):
             )
             df = pd.DataFrame(list(qs.values('year', variable)))
             dati=df.groupby(pd.PeriodIndex(df['year'], freq="M"))[variable].mean().reset_index()
-            datis = [i for i in dati[variable].values]
+            datos = [i for i in dati[variable].values]
+            promedio = np.average(datos)
+            minimo = np.min(datos)
+            maximo = np.max(datos)
             fechas = dati['year']    
             for item in qs:
                 data.append(getattr(item, variable))
@@ -225,10 +234,14 @@ def chartView(request):
         'datoForm':datoForm,
         'form':form,
         'variable':variable,
-        'data':data,
-        'df':dati,
+        'variableName':variableName,
+        'data':data,        
         'fechas':fechas,
-        'datis':datis
+        'datos':datos,
+        'promedio': promedio,
+        'minimo':minimo,
+        'maximo':maximo,
+
 
     }
     return render(request, 'territorios/charts.html', context)

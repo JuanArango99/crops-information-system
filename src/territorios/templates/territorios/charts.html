@@ -91,7 +91,7 @@
                 labels: [{% for item in fechas %}'{{item}}',{% endfor %}],
                 datasets: [{
                     label: '{{variable}}',
-                    data: {{datis}} ,
+                    data: {{datos}} ,
                     backgroundColor: 'rgba(79,142,204, 0.6)',
                     borderColor: 'rgba(200, 200, 200, 0.75)',
                     hoverBorderColor: 'rgba(200, 200, 200, 1)',
@@ -124,17 +124,26 @@
     {{form |crispy}}
     <button id="submitButton" type="submit" class="btn btn-primary mt-3">Buscar</button>
 </form>
-{% if qs %}
-    <h3 class="headers">
-        Territorio: {{territorioObj}} 
-    </h3>
-    <h3 class="headers">
-        Municipio: {{territorioObj.municipio.name}}
-    </h3>    
+{% if qs %}    
     <!-- Add Charts -->
-    <div class="graphBox">                
+    <div class="graphBox" style="grid-template-columns: 1fr 1fr 1fr 1fr;">                
+        <div class="box etiqueta">
+            <h3 class="headersBox">Municipio: {{territorioObj.municipio.name}}</h3>
+            <h3 class="headersBox">Territorio: {{territorioObj}}</h3>            
+        </div>                              
+        <div class="box etiqueta">
+            <h3 class="headersBox">{{variableName}} mínimo: <br/><br/>{{minimo}} </h3>            
+        </div>                        
+        <div class="box etiqueta">
+            <h3 class="headersBox">{{variableName}} máximo: <br/><br/>{{maximo}} </h3>
+        </div>        
+        <div class="box etiqueta">
+            <h3 class="headersBox">{{variableName}} promedio: <br/><br/> {{promedio}}</h3>
+        </div>                          
+    </div>
+    <div class="graphBox">                               
         <div class="box"><canvas id="myChart"></canvas></div>
-        <div class="box"><canvas id="myChart2"></canvas></div>        
+        <div class="box"><canvas id="myChart2"></canvas></div>
     </div>
 {% else %}
     <div class="alert alert-info mt-3" role="alert">

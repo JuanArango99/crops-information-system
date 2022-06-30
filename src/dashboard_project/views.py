@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
 def home_view(request):
-
     return render(request,'home.html')
 
 def news_view(request):
@@ -29,7 +28,7 @@ def login_view(request):
                 else: #Return to home
                     return redirect('home')
         else:
-            error_message = 'Lo sentimos.. Algo ocurrió mal'
+            error_message = 'Lo sentimos.. No se pudo iniciar sesión.'
     
     context = {
         'form': form,

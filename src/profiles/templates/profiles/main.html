@@ -9,18 +9,27 @@ My profile
 
 {% if confirm %}
     <div class="alert alert-primary" role="alert">
-        Your profile has been updated
+        Tu perfil ha sido actualizado
     </div>
 {% endif %}
 
-<div class='text-center'>
-    <img src="{{profile.foto.url}}" alt="my-profile" class="avatar-big">
-</div>
 
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form | crispy}}
-    <button type="submit" class="btn btn-primary mt-3"> update </button>
+
+<form action="" class="profileForm" method="POST" enctype="multipart/form-data">
+    <h1 class="headers" style="text-align:center;" >Mi Perfil</h1>
+    <br>
+    <div class='row'>
+        <div class="col-4">            
+            <h2 class="headers" style="text-align:center;" >Foto</h2>
+            <img src="{{profile.foto.url}}" alt="my-profile" class="avatar-big">            
+        </div>
+        <div class="col-8">
+            {% csrf_token %}
+            {{form | crispy}}
+            <button type="submit" class="btn btn-primary mt-3"> Actualizar </button>
+        </div>
+    </div>
+    
 </form>
 
 

@@ -10,21 +10,12 @@
         {{error_message}}
     </div>
 {% endif %}
+<br>
+<h1 class="headers" style="text-align:center;" >Iniciar Sesión</h1>
+<form action="" method="POST" class="p-3 border border-2 form">
+    {% csrf_token %}
+    {{form | crispy}}
+    <button type="submit" class="btn btn-primary mt-3">Iniciar Sesión</button>
+</form>
 
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <form action="" method="POST" class="p-3 border border-2">
-                {% csrf_token %}
-                {{form | crispy}}
-                <button type="submit" class="btn btn-primary mt-3">Login</button>
-            </form>
-        </div>
-        <div class="col-6">
-            Bienvenido al Sistema de Información
-            <br>
-            Por Favor, ingresar sus credenciales
-        </div>
-    </div>
-</div>
 {% endblock content %}
