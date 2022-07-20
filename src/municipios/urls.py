@@ -5,7 +5,7 @@ from .views import create_municipio_view,csv_upload_view
 app_name = 'municipios'
 
 urlpatterns = [
- path('', create_municipio_view, name = "home"),   
+ path('maiz/', create_municipio_view, name = "maiz"),   
  path('upload/', csv_upload_view, name='upload'),
 
 ]

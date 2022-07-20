@@ -21,10 +21,10 @@ from .views import home_view,news_view, login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home_view, name='home'),
     path('territorios/', include('territorios.urls', namespace='territorios')),
     path('municipios/', include('municipios.urls', namespace='municipios')),
-    path('profiles/', include('profiles.urls', namespace='profiles')),
-    path('', home_view, name='home'),
+    path('profiles/', include('profiles.urls', namespace='profiles')),    
     path('noticias/', news_view, name='news'),    
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),        
