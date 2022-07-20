@@ -136,7 +136,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'territorios' / 'static',        
-    BASE_DIR / 'territorios' / 'profiles',    
+    BASE_DIR / 'profiles' / 'static',    
+    BASE_DIR / 'municipios' / 'static',    
 ]
 
 MEDIA_URL = '/media/'
