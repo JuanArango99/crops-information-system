@@ -3,12 +3,14 @@
 {% url 'home' as path_to_home %}
 {% url 'news' as path_to_news %}
 {% url 'reports' as path_to_reports %}
+{% url 'territorios:reports' as path_to_territorios_reports %}
 {% url 'territorios:clima' as path_to_upload %}
 {% url 'territorios:charts' as path_to_charts %}
 {% url 'territorios:statistics' as path_to_statistics %}
 {% url 'territorios:map' as path_to_map %}
 {% url 'profiles:my-profile' as path_to_my_profile %}
 {% url 'municipios:maiz' as path_to_municipios %}
+{% url 'municipios:reports' as path_to_municipios_reports %}
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(6, 43, 17, 0.9);">
   <div class="container-fluid">
@@ -31,8 +33,8 @@
             Reportes
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Cultivo</a>
-            <a class="dropdown-item" href="#">Clima</a>            
+            <a class="dropdown-item" href="{{path_to_municipios_reports}}">Cultivo</a>
+            <a class="dropdown-item" href="{{path_to_territorios_reports}}">Clima</a>            
           </div>
         </li> 
         <li class="nav-item">
