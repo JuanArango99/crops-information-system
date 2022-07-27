@@ -126,20 +126,27 @@
 </form>
 {% if qs %}    
     <!-- Add Charts -->
-    <div class="graphBox" style="grid-template-columns: 1fr 1fr 1fr 1fr;">                
-        <div class="box etiqueta">
-            <h3 class="headersBox">Municipio: {{territorioObj.municipio.name}}</h3>
-            <h3 class="headersBox">Territorio: {{territorioObj}}</h3>            
-        </div>                              
-        <div class="box etiqueta">
-            <h3 class="headersBox">{{variableName}} mínimo: <br/><br/>{{minimo}} </h3>            
-        </div>                        
-        <div class="box etiqueta">
-            <h3 class="headersBox">{{variableName}} máximo: <br/><br/>{{maximo}} </h3>
+    <div class="cardBox">
+        <div class="card">
+            <div class="numbers">{{territorioObj.municipio.name}}</div>
+            <div class="cardName">Municipio</div>           
         </div>        
-        <div class="box etiqueta">
-            <h3 class="headersBox">{{variableName}} promedio: <br/><br/> {{promedio}}</h3>
-        </div>                          
+        <div class="card">
+            <div class="numbers">{{territorioObj}}</div>
+            <div class="cardName">Territorio</div>           
+        </div>        
+        <div class="card">
+            <div class="numbers">{{minimo}}</div>
+            <div class="cardName">Minimo ({{unidades}}) </div>           
+        </div>        
+        <div class="card">
+            <div class="numbers">{{maximo}} </div>
+            <div class="cardName">Maximo ({{unidades}})</div>           
+        </div>        
+        <div class="card">
+            <div class="numbers">{{promedio}} </div>
+            <div class="cardName">Promedio ({{unidades}})</div>           
+        </div>        
     </div>
     <div class="graphBox">                               
         <div class="box"><canvas id="myChart"></canvas></div>

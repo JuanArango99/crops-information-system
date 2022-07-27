@@ -186,6 +186,7 @@ def statisticView(request):
     return render(request, 'territorios/statistics.html', context)
 
 def chartView(request):
+    unidadesDict = {'temperature': '°C', 'relative_humidity': "%", 'irradiance': "MJ/m^2", 'precipitation': "mm"}
     territorioForm = TerritorioForm()
     datoForm = DatoForm(request.POST or None)
     form = ChartForm(request.POST or None)
@@ -196,14 +197,15 @@ def chartView(request):
     data = []
     territorio = None
     territorioObj = None
+    unidades=None
     df=None
     dati=None
     datos=None
     fechas=None
     fechas=[]
-    promedio = None
-    minimo = None
-    maximo = None
+    promedio = 0
+    minimo = 0
+    maximo = 0
     variableName=None
     if request.method == 'POST':
         if form.is_valid():
@@ -226,6 +228,7 @@ def chartView(request):
             fechas = dati['year']    
             for item in qs:
                 data.append(getattr(item, variable))
+            unidades = unidadesDict[variable]            
         
     context = {
         'qs': qs,
@@ -238,9 +241,10 @@ def chartView(request):
         'data':data,        
         'fechas':fechas,
         'datos':datos,
-        'promedio': promedio,
-        'minimo':minimo,
-        'maximo':maximo,
+        'promedio': round(promedio,2),
+        'minimo':round(minimo,2),
+        'maximo':round(maximo,2),
+        'unidades':unidades,
 
 
     }
